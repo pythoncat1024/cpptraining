@@ -42,11 +42,54 @@ int main() {
     return 0;
 }
 
+void display3(const student pa[], int n) {
+    for (int i = 0; i < n; ++i) {
+        student st = pa[i];
+        cout << "3st:{"
+             << st.fullName << ","
+             << st.hobby << ","
+             << st.oopLevel << "}" << endl;
+    }
+}
+
+void display2(student *st) {
+    cout << "2st:{"
+         << st->fullName << ","
+         << st->hobby << ","
+         << st->oopLevel << "}" << endl;
+}
+
+void display1(student st) {
+    cout << "1st:{"
+         << st.fullName << ","
+         << st.hobby << ","
+         << st.oopLevel << "}" << endl;
+}
+
+
 int getinfo(student pa[], int n) {
 
-    for (int i = 0; i < n; ++i) {
-         cin.getline(pa[i].fullName,SLEN);
+    int i;
+    bool exit = false;
+    for (i = 0; i < n; ++i) {
+        cout << "请输入第" << (i + 1) << "个学生的姓名：" << endl;
+        cin.get(pa[i].fullName, SLEN);
+        dropInput();
+        cout << "请输入第" << (i + 1) << "个学生的爱好：" << endl;
+        cin.get(pa[i].hobby, SLEN);
+        dropInput();
+        cout << "请输入第" << (i + 1) << "个学生的等级：" << endl;
+        if (!(cin >> pa[i].oopLevel)) { // 只能这样子，不能做成变量然后判断！
+            exit = true;
+        }
+        dropInput();
+        if (exit) {
+            cout << "illegal input #### " << endl;
+            i++;
+            break;
+        }
     }
+    return i;
 }
 
 void dropInput() {
