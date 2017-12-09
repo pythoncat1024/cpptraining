@@ -16,6 +16,8 @@ void display2(student *st);
 
 void display3(const student pa[], int n);
 
+void dropInput();
+
 /*
  * 补全程序
  */
@@ -40,7 +42,18 @@ int main() {
     return 0;
 }
 
+int getinfo(student pa[], int n) {
 
+    for (int i = 0; i < n; ++i) {
+         cin.getline(pa[i].fullName,SLEN);
+    }
+}
+
+void dropInput() {
+    while (cin && cin.get() != '\n')
+        continue;
+    cin.clear();
+}
 
 
 
