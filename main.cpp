@@ -1,68 +1,79 @@
-#include<stdio.h>
 #include <iostream>
 
-
-using namespace std;
-
-int Fill_array(double *arr, int length);
-
-void Show_array(const double *arr, int size);
-
-void Reverse_array(double *arr, int size);
-
-/*
- 编写一个程序，它使用下列函数：
- Fill_array()将一个double 数组的名称和长度作为参数。它提示用户输入double值，并将
- 这些值存储到数组中。当数组被填满或用户输入了非数字时，输入将停止，并返回实际输入了多少个数字。
- Show_array()将一个double数组的名称和长度作为参数，并显示该数组的内容。
- Reverse_array()将一个double数组的名称和长度作为参数，并将存储在数组中的值的顺序反转。
- 程序将使用这些函数来填充数组，然后显示数组；反转数组，然后显示数组；反转数组中除了第一个和
- 最后一个元素之外的所有元素，然后显示数组。
+/**
+ * 程序清单7.7
  */
-int main(void) {
-    const int MaxLength = 20;
-    double arr[MaxLength];
-    int size = Fill_array(arr, MaxLength);
-    Show_array(arr, size);
-    Reverse_array(arr, size);
-    Show_array(arr, size);
-    Reverse_array(arr + 1, size - 2);
-    Show_array(arr, size);
+const int Max = 5;
+
+// function prototypes
+int fill_array(double arr[], int limit);
+
+void show_array(const double ar[], int n); // don't change data
+void revalue(double r, double ar[], int n);
+
+int main() {
+
+    using namespace std;
+    double properties[Max];
+
+    int size = fill_array(properties, Max);
+    show_array(properties, size);
+    if (size > 0) {
+        cout << "Enter revaluation factor:";
+        double factor;
+        while (!(cin >> factor)) // bad input
+        {
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+
+            cout << "Bad input; please enter a number: ";
+        }
+
+        revalue(factor, properties, size);
+        show_array(properties, size);
+    }
+    cout << "Done.\n";
+
+    cin.get();
+    cin.get();
     return 0;
 }
 
-void Reverse_array(double *arr, int size) {
+int fill_array(double ar[], int limit) {
+    using namespace std;
     double temp;
-    for (int i = 0; i < size; ++i) {
-        int begin = i;
-        int end = size - i - 1;
-        if (begin < end) {
-            temp = arr[begin];
-            arr[begin] = arr[end];
-            arr[end] = temp;
-        }
+    int i;
+    for (i = 0; i < limit; ++i) {
+        cout << "Enter value #" << (i + 1) << ": ";
+        cin >> temp;
+        if (!cin) // bad input
+        {
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+            cout << "Bad input;input process terminated.\n";
+            break;
+        } else if (temp < 0)  // signal to terminate
+            break;
+        ar[i] = temp;
+    }
+    return i;
+}
+
+// the following function can use,but not alter,
+// the array whose address is ar
+void show_array(const double ar[], int n) {
+    using namespace std;
+    for (int i = 0; i < n; ++i) {
+        cout << "Property #" << (i + 1) << ": $";
+        cout << ar[i] << endl;
     }
 }
 
-void Show_array(const double *arr, int size) {
-    cout << "arr(" << size << "):[";
-    for (int i = 0; i < size - 1; ++i) {
-        cout << arr[i] << ",";
+// multiplies each element of ar[] by r
+void revalue(double r, double ar[], int n) {
+    for (int i = 0; i < n; ++i) {
+        ar[i] *= r;
     }
-    cout << arr[size - 1] << "]" << endl;
 }
-
-int Fill_array(double *arr, int length) {
-    cout << "请输入数组元素，以空格作为间隔，提前结束输入，请按q，然后回车:";
-    double num;
-    int size = 0;
-    for (int i = 0; i < length; ++i) {
-        if (cin && (cin >> num)) {
-            arr[i] = num;
-            size++;
-        }
-    }
-    return size;
-}
-
-
