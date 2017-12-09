@@ -9,7 +9,11 @@ int input(double *arr); // 输入函数
 void show(const double *arr, int len); // 一行显示成绩
 double average(const double *arr, int len); // 报告平均成绩
 void dropInput(); // 丢弃多余输入
-
+/**
+ 编写一个程序，要求用户输入最多10个高尔夫成绩，并将其存储在一个数组中。程序允许用户提早结束
+ 输入，并在一行显示所有的成绩，然后报告平均成绩。请使用3个数组处理的函数来分别进行输入、显示
+ 和计算平均成绩。
+ */
 int main(void) {
 
     double arr[Max];
