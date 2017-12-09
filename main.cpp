@@ -1,4 +1,7 @@
 #include <iostream>
+#include <array>
+#include <string>
+#include <vector>
 
 using namespace std;
 const int SLEN = 30;
@@ -97,24 +100,3 @@ void dropInput() {
         continue;
     cin.clear();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
