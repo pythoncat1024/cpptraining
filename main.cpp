@@ -3,56 +3,29 @@
 
 
 using namespace std;
-struct box {
-    char marker[40];
-    float height;
-    float width;
-    float length;
-    float volume;
-};
-
-void showBox(box obj);
-
-void setVolume(box *pBox);
-/*
- 下面是一个结构的声明：
-struct box {
-    char marker[40];
-    float height;
-    float width;
-    float length;
-    float volume;
-};
- a. 编写一个函数，按值传递box结构，并显示每个成员的值。
- b. 编写一个函数，传递box结构的地址，并将volume成员设置为其他三维长度的乘积。
- c. 编写一个使用这两个函数的简单程序。
+const int FieldMax = 47;
+const int FieldSelected = 5;
+const int SpecialMax = 27;
+/**
+ 玩家从一组被成为区域号码(field number)的号码中选择几个。例如：可以从区域号码1~47中
+ 选择5个号码；还可以从第二个区间（如1~27）选择一个号码（称为特选号码）。要赢得头奖，必
+ 须正确猜中所有的号码。中头奖的几率是所有域号码的几率与选中特选号码几率的乘积。例如，在这
+ 个例子中，中头奖的几率是从47个号码中正确选取5个号码的几率与从27个号码中正确选中1个号码的
+ 乘积。计算中得这种彩票头奖的几率。
  */
 int main(void) {
 
-    box obj = {
-            "duck",
-            12.5f,
-            21.6f,
-            14.0f,
-            123.4f
-    };
-    showBox(obj);
-    setVolume(&obj);
-    showBox(obj);
+    double done = 0; // 中奖概率
+    double base = 1; // 基数
+    int num = FieldMax;
+    for (int i = 0; i < FieldSelected; ++i) {
+        base *= num;
+        num--;
+    }
+    base *= SpecialMax;
+
+    done = 1.0 / base;
+
+    cout << "头奖的中奖概率为:" << done << endl;
     return 0;
-}
-
-void setVolume(box *pBox) {
-    pBox->volume = pBox->length * pBox->width * pBox->height;
-}
-
-void showBox(box obj) {
-    cout << "obj:{"
-         << obj.marker << ","
-         << obj.height << ","
-         << obj.width << ","
-         << obj.length << ","
-         << obj.volume << "}" << endl;
-
-
 }
