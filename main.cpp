@@ -3,29 +3,39 @@
 
 
 using namespace std;
-const int FieldMax = 47;
-const int FieldSelected = 5;
-const int SpecialMax = 27;
-/**
- 玩家从一组被成为区域号码(field number)的号码中选择几个。例如：可以从区域号码1~47中
- 选择5个号码；还可以从第二个区间（如1~27）选择一个号码（称为特选号码）。要赢得头奖，必
- 须正确猜中所有的号码。中头奖的几率是所有域号码的几率与选中特选号码几率的乘积。例如，在这
- 个例子中，中头奖的几率是从47个号码中正确选取5个号码的几率与从27个号码中正确选中1个号码的
- 乘积。计算中得这种彩票头奖的几率。
+
+long recursion(int num);
+
+void dropInput();
+/*
+ 定义一个递归函数，接受一个整数参数，并返回该参数的阶乘。前面讲过，3的阶乘写作3!，等于3*2!，
+ 以此类推；而0!被定义为1。通用的计算公式是，如果n大于0，则n!=n*(n-1)!。在程序中对该函数
+ 进行测试，程序使用循环让用户输入不同的值，程序将报告这些值的阶乘。
  */
 int main(void) {
 
-    double done = 0; // 中奖概率
-    double base = 1; // 基数
-    int num = FieldMax;
-    for (int i = 0; i < FieldSelected; ++i) {
-        base *= num;
-        num--;
+    cout << " 请输入一个整数，用于计算其阶乘：";
+    int num;
+    while (cin && (cin >> num) && num >= 0) {
+        dropInput();
+        long ret = recursion(num);
+        cout << "recursion(" << num << ")=" << ret << endl;
+        cout << " 请输入一个整数，用于计算其阶乘：";
     }
-    base *= SpecialMax;
-
-    done = 1.0 / base;
-
-    cout << "头奖的中奖概率为:" << done << endl;
+    dropInput();
+    cout << "输入无效，结束程序。" << endl;
     return 0;
 }
+
+long recursion(int num) {
+    if (num == 0) {
+        return 1;
+    } else {
+        return num * recursion(num - 1);
+    }
+}
+
+void dropInput() {
+    while (cin && cin.get() != '\n')continue;
+}
+
