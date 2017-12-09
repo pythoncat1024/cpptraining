@@ -10,32 +10,32 @@ const std::array<std::string, Seasons> Snames =
         {"Spring", "Summer", "Fall", "Winter"};
 
 // function to modify array object
-void fill(std::array<double, Seasons> *pa);
+void fill(double *pa, int size);
 
 // function that uses array object without modifying it
-void show(std::array<double, Seasons> da);
+void show(const double *da, int size);
 
 int main() {
-    std::array<double, Seasons> expenses;
-    fill(&expenses);
-    show(expenses);
+    double expenses[Seasons];
+    fill(expenses, Seasons);
+    show(expenses, Seasons);
     return 0;
 }
 
-void fill(std::array<double, Seasons> *pa) {
+void fill(double *pa, int size) {
     using namespace std;
-    for (int i = 0; i < Seasons; ++i) {
+    for (int i = 0; i < size; ++i) {
         cout << "Enter " << Snames[i] << " expenses ";
-        cin >> (*pa)[i];
+        cin >> pa[i];
     }
 }
 
 
-void show(std::array<double, Seasons> da) {
+void show(const double *da, int size) {
     using namespace std;
     double total = 0.0;
     cout << "\nEXPENSES\n";
-    for (int i = 0; i < Seasons; ++i) {
+    for (int i = 0; i < size; ++i) {
         cout << Snames[i] << ": " << da[i] << endl;
         total += da[i];
     }
