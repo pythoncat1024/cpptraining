@@ -1,77 +1,58 @@
 #include <iostream>
 
-/*
-char (*pFun)(int);
+typedef double (*FuncAdd)(double, double);
 
-char glFun(int a) { ; }
+double add(double, double);
 
-int main() {
-    pFun = glFun;
-    (*pFun)(2);
-    return 0;
-}*/
-
-
-int (*pAdd)(int, int); // 定义函数指针 pAdd , pAdd不是一个函数，而是函数指针
-
-typedef int (*pFunAdd)(int, int); // 定义一个新的类型
-// pFunAdd 到底是什么类型呢？是一个函数指针类型，
-// 其中被指向的函数是参数为2个int,返回类型为int.
-
-int add(int x, int y);
-
-int sum(int x, int y);
-
-void useArr(pFunAdd arr[], int size);
+double calculate(double a, double d, double (*add)(double, double));
 
 /**
- * 定义一个新的类型，如同int,char一样，类型名：pFuncUseArr
+ 设计一个名为 calculate()的函数，它接受两个double值和一个指向函数的指针，而被指向的函数
+ 接受两个double的参数，并返回一个double的值。calculate()函数的类型也是double,并返回
+ 被指向的函数使用calculate()的两个double参数计算得到的值。例如，假设add()函数的定义如下：
+ double add(double x,double y)
+ {
+    return x+y;
+ }
+ 则下述代码中的函数调用将导致calculate()把2.5和10.4传递给add()函数，并返回add()的返回值：
+ double q = calculate(2.5,10.4,add);
  */
-typedef void (*pFunUseArr)(pFunAdd *arr, int size); // define a type
 
 int main() {
     using namespace std;
-    pAdd = add;
-    int zz = (*pAdd)(3, 4);
+    double a, b;
+    cout << "请输入两个小数，以空格作为间隔，回车表示一组输入完成：";
+    while ((cin >> a) && cin >> b) {
+        while (cin && cin.get() != '\n') {
+            continue;
+        }
+        cin.clear();
+        double ret = calculate(a, b, add);
+        cout << "calculate(" << a << "," << b << ")=" << ret << endl;
+        cout << "请输入两个小数，以空格作为间隔，回车表示一组输入完成：";
+    }
+    cout << "Bad Input,Done." << endl;
+    cout << "使用指针数组，让calculate()连续调用这些函数：" << endl;
 
-    cout << "zz=" << zz << endl;
-    cout << "# # # # # # # # # # # # " << endl;
+    int time = 3;
+    FuncAdd arr[time]; // 函数指针数组
+    for (int i = 0; i < time; ++i) {
+        arr[i] = add;
+    }
 
-    pFunAdd funAdd = add;
-
-    int q = funAdd(5, 6);
-
-    cout << "q =" << q << endl;
-
-    cout << "函数指针数组：" << endl;
-    pFunAdd arr[3] = {add, add, sum};
-    useArr(arr, 3);
-
-    cout << "函数指针-- " << endl;
-
-    pFunUseArr pfu = useArr;
-
-    pfu(arr+1, 2);
+    a = 1.23, b = 4.56;
+    for (int j = 0; j < time; ++j) {
+        double ret = calculate(a, b, add);
+        cout << "calculate(" << a << "," << b << ")=" << ret << endl;
+    }
     return 0;
 }
 
-void useArr(pFunAdd arr[], int size) {
-    int a = 3;
-    int b = 4;
-    using namespace std;
-    for (int i = 0; i < size; ++i) {
-        pFunAdd pf = arr[i];
-        cout << "i=" << i << " , pf=" << pf
-             << ":\t" << pf(a, b) << endl;
-    }
+double calculate(double a, double d, double (*add)(double, double)) {
 
+    return add(a, d);
 }
 
-int add(int x, int y) {
-    return x + y;
-}
-
-int sum(int x, int y) {
-
-    return x * x + y * y;
+double add(double a, double b) {
+    return a + b;
 }
