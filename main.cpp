@@ -20,6 +20,15 @@ typedef int (*pFunAdd)(int, int); // 定义一个新的类型
 
 int add(int x, int y);
 
+int sum(int x, int y);
+
+void useArr(pFunAdd arr[], int size);
+
+/**
+ * 定义一个新的类型，如同int,char一样，类型名：pFuncUseArr
+ */
+typedef void (*pFunUseArr)(pFunAdd *arr, int size); // define a type
+
 int main() {
     using namespace std;
     pAdd = add;
@@ -33,9 +42,36 @@ int main() {
     int q = funAdd(5, 6);
 
     cout << "q =" << q << endl;
+
+    cout << "函数指针数组：" << endl;
+    pFunAdd arr[3] = {add, add, sum};
+    useArr(arr, 3);
+
+    cout << "函数指针-- " << endl;
+
+    pFunUseArr pfu = useArr;
+
+    pfu(arr+1, 2);
     return 0;
+}
+
+void useArr(pFunAdd arr[], int size) {
+    int a = 3;
+    int b = 4;
+    using namespace std;
+    for (int i = 0; i < size; ++i) {
+        pFunAdd pf = arr[i];
+        cout << "i=" << i << " , pf=" << pf
+             << ":\t" << pf(a, b) << endl;
+    }
+
 }
 
 int add(int x, int y) {
     return x + y;
+}
+
+int sum(int x, int y) {
+
+    return x * x + y * y;
 }
