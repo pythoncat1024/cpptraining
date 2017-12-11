@@ -1,58 +1,57 @@
 #include <iostream>
+#include <fstream>
 
-typedef double (*FuncAdd)(double, double);
+using namespace std;
 
-double add(double, double);
+void file_it(ostream &os, double fo, const double fe[], int n);
 
-double calculate(double a, double d, double (*add)(double, double));
-
-/**
- 设计一个名为 calculate()的函数，它接受两个double值和一个指向函数的指针，而被指向的函数
- 接受两个double的参数，并返回一个double的值。calculate()函数的类型也是double,并返回
- 被指向的函数使用calculate()的两个double参数计算得到的值。例如，假设add()函数的定义如下：
- double add(double x,double y)
- {
-    return x+y;
- }
- 则下述代码中的函数调用将导致calculate()把2.5和10.4传递给add()函数，并返回add()的返回值：
- double q = calculate(2.5,10.4,add);
- */
+const int LIMIT = 5;
 
 int main() {
-    using namespace std;
-    double a, b;
-    cout << "请输入两个小数，以空格作为间隔，回车表示一组输入完成：";
-    while ((cin >> a) && cin >> b) {
-        while (cin && cin.get() != '\n') {
-            continue;
-        }
-        cin.clear();
-        double ret = calculate(a, b, add);
-        cout << "calculate(" << a << "," << b << ")=" << ret << endl;
-        cout << "请输入两个小数，以空格作为间隔，回车表示一组输入完成：";
-    }
-    cout << "Bad Input,Done." << endl;
-    cout << "使用指针数组，让calculate()连续调用这些函数：" << endl;
 
-    int time = 3;
-    FuncAdd arr[time]; // 函数指针数组
-    for (int i = 0; i < time; ++i) {
-        arr[i] = add;
+    ofstream fout;
+    const char *fn = "ep-data.txt";
+    fout.open(fn);
+    if (!fout.is_open()) {
+        cout << "Can't open " << fn << ". Bye\n";
+        exit(EXIT_FAILURE);
     }
+    double objective;
+    cout << "Enter the focal length of your "
+            "telescope objective in mm: ";
+    cin >> objective;
+    double eps[LIMIT];
 
-    a = 1.23, b = 4.56;
-    for (int j = 0; j < time; ++j) {
-        double ret = calculate(a, b, add);
-        cout << "calculate(" << a << "," << b << ")=" << ret << endl;
+    cout << "Enter the focal length,in mm of " << LIMIT
+         << " eyepieces:\n";
+    for (int i = 0; i < LIMIT; ++i) {
+        cout << "Eyepiece #" << (i + 1) << " : ";
+        cin >> eps[i];
     }
+    file_it(fout, objective, eps, LIMIT);
+    file_it(cout, objective, eps, LIMIT);
+    fout.close();
     return 0;
 }
 
-double calculate(double a, double d, double (*add)(double, double)) {
+void file_it(ostream &os, double fo, const double fe[], int n) {
+    ios_base::fmtflags initial;
+    // set current and save prev format
+    initial = os.setf(ios_base::fixed);
+    os.precision(0);
+    os << "Focal length of objective: " << fo << " mm\n";
+    os.setf(ios_base::showpoint);
+    os.precision(1);
+    os.width(12);
+    os << "f.l. eyepiece";
+    os.width(15);
+    os << "magnification" << endl;
+    for (int i = 0; i < n; ++i) {
+        os.width(12);
+        os << fe[i];
+        os.width(15);
+        os << int(fo / fe[i] + 0.5) << endl;
+    }
 
-    return add(a, d);
-}
-
-double add(double a, double b) {
-    return a + b;
+    os.setf(initial); // reset to prev format
 }
