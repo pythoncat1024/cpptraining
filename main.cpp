@@ -1,56 +1,57 @@
 #include<iostream>
 
-using namespace std;
+template<typename T>
+void ShowArray(T arr[], int n);
 
 template<typename T>
-T maxn(T arr[], int n);
+void ShowArray(T *arr[], int n);
 
-char *maxn(char **arr, int n);
+struct debts {
+    char name[50];
+    double amount;
+};
 
 int main() {
-
-    int arr1[6] = {1, 3, 5, 2, 4, 23};
-
-    double arr2[4] = {1.3, 3, 5.4, 2};
-
-    cout << "max5 in arr1 ===" << maxn(arr1, 6) << endl;
-    cout << "max5 in arr2 ===" << maxn(arr2, 4) << endl;
-
-    char *arr[5]{
-            "比亚迪 唐",
-            "东郭灰猫 ♂",
-            "vector chen",
-            "to be or not to be",
-            "hello cpp",
+    using namespace std;
+    int things[6] = {13, 31, 103, 301, 310, 130};
+    struct debts mr_E[3] = {
+            {"Ima Wolfe", 2400.0},
+            {"Ura Foxe",  1300.1},
+            {"Iby Stout", 1800.0}
     };
 
-    cout << maxn(arr, 5) << endl;
+    double *pd[3];
+
+    // set points to the amount members of the structures in mr_E
+    for (int i = 0; i < 3; ++i)
+        pd[i] = &mr_E[i].amount;
+
+    cout << "Listing Mr. E's counts of things:\n";
+    // things is an array of int
+    ShowArray(things, 6);
+    cout << "Listing Mr. E's debts:\n";
+    // pa is an array of pointers to double
+    ShowArray(pd, 3); // use template B (more specialized)
     return 0;
 }
 
-char *maxn(char **arr, int n) {
-
-    int pos = 0;
-    size_t temp = strlen(arr[pos]);
-//    cout << "size=" << temp << endl;
-    for (int i = 1; i < n; ++i) {
-        size_t len = strlen(arr[i]);
-//        cout << "size=" << len << endl;
-        if (len > temp) {
-            pos = i;
-        }
+template<typename T>
+void ShowArray(T arr[], int n) {
+    using namespace std;
+    cout << "template A\n";
+    for (int i = 0; i < n; ++i) {
+        cout << arr[i] << " ";
     }
-    return arr[pos];
+    cout << endl;
+
 }
 
 template<typename T>
-T maxn(T arr[], int n) {
-    T temp = arr[0];
-    for (int i = 1; i < n; ++i) {
-        if (arr[i] > temp) {
-            temp = arr[i];
-        }
+void ShowArray(T *arr[], int n) {
+    using namespace std;
+    cout << "template B\n";
+    for (int i = 0; i < n; ++i) {
+        cout << *arr[i] << " ";
     }
-    return temp;
+    cout << endl;
 }
-
