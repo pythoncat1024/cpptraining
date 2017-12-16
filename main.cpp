@@ -3,37 +3,25 @@
 
 using namespace std;
 
-struct box {
-    char marker[40];
-    float height;
-    float width;
-    float length;
-    float volume;
-};
-
-void show(const box &obj);
-
-box &fill(box &obj);
+template<typename T>
+void swap2(T &a, T &b);
 
 int main() {
 
-    box b = {"比亚迪 唐", 12.5, 20, 18, 99};
-    show(b);
-    fill(b);
-    show(b);
+
+    int a = 12;
+    int b = 9;
+
+    cout << "before: a=" << a << " , b=" << b << endl;
+    swap2(a, b);
+    cout << "after : a=" << a << " , b=" << b << endl;
     return 0;
 }
 
-box &fill(box &obj) {
-    obj.volume = obj.width * obj.height * obj.length;
-    return obj;
-}
-
-void show(const box &obj) {
-    cout << "{ " << obj.marker << " , "
-         << obj.height << " , "
-         << obj.width << " , "
-         << obj.length << " , "
-         << obj.volume << " }" << endl;
+template<typename T>
+void swap2(T &a, T &b) {
+    T temp = a;
+    a = b;
+    b = temp;
 }
 
