@@ -39,10 +39,12 @@ template<typename T>
 void ShowArray(T arr[], int n) {
     using namespace std;
     cout << "template A\n";
+    long tt = 0;
     for (int i = 0; i < n; ++i) {
-        cout << arr[i] << " ";
+        tt += arr[i];
+//        cout << arr[i] << " ";
     }
-    cout << endl;
+    cout << tt << endl;
 
 }
 
@@ -50,8 +52,10 @@ template<typename T>
 void ShowArray(T *arr[], int n) {
     using namespace std;
     cout << "template B\n";
+    long tt = 0;
     for (int i = 0; i < n; ++i) {
-        cout << *arr[i] << " ";
+        tt += *arr[i];
+//        cout << *arr[i] << " ";
     }
-    cout << endl;
+    cout << tt << endl;
 }
