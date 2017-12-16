@@ -1,35 +1,40 @@
 #include<iostream>
+#include <string>
 
 using namespace std;
 
-struct CandyBar {
-    string brandName;
-    double weight;
-    int hot;
-};
+string &upper_str(string &src);
 
-CandyBar &fill(CandyBar &cb, char *name = (char *) "Millennium Munch",
-               double w = 2.85, int h = 350);
+string &getOneLine(string &src);
 
-void show(const CandyBar &cb);
+int main(void) {
 
-
-int main() {
-    CandyBar bar{};
-//    fill(bar);
-    show(fill(bar));
+    string src;
+    const unsigned int SIZE = 100;
+    char temp[SIZE];
+    cout << "Enter a string (q to quit):";
+    while ((cin.getline(temp, SIZE)) && &temp[0] != NULL && temp[0] != 'q') {
+//        while (cin.get() != '\n')continue;
+        src = temp;
+        cout << upper_str(src) << endl;
+        cout << "Enter a string (q to quit):";
+    }
+    cout << "Bye.\n";
     return 0;
 }
 
-void show(const CandyBar &cb) {
-    cout << "{" << cb.brandName << " , "
-         << cb.weight << " , "
-         << cb.hot << "}" << endl;
-}
+string &upper_str(string &src) {
 
-CandyBar &fill(CandyBar &cb, char *name, double w, int h) {
-    cb.brandName = name;
-    cb.weight = w;
-    cb.hot = h;
-    return cb;
+    unsigned long size = src.size();
+    char temp[size + 1];
+    for (unsigned int i = 0; i < size; ++i) {
+        temp[i] = src.at(i);
+    }
+    temp[size] = '\0';
+    for (int j = 0; j < size; ++j) {
+        temp[j] = (char) toupper(temp[j]);
+    }
+    src = temp;
+//    cout << "upper --> " << src << endl;
+    return src;
 }
