@@ -1,40 +1,53 @@
 #include<iostream>
 #include <string>
+#include <cstring>
 
 using namespace std;
 
-string &upper_str(string &src);
+struct stringy {
+    char *str;
+    int ct;
+};
 
-string &getOneLine(string &src);
+void set(stringy &str, const char *target);
 
-int main(void) {
+void show(stringy &src, int times = 0);
 
-    string src;
-    const unsigned int SIZE = 100;
-    char temp[SIZE];
-    cout << "Enter a string (q to quit):";
-    while ((cin.getline(temp, SIZE)) && &temp[0] != NULL && temp[0] != 'q') {
-//        while (cin.get() != '\n')continue;
-        src = temp;
-        cout << upper_str(src) << endl;
-        cout << "Enter a string (q to quit):";
-    }
-    cout << "Bye.\n";
+void show(char *src, int times = 0);
+
+int main() {
+    stringy beany;
+    char testing[] = "Reality isn't what it used to be.";
+    set(beany, testing);
+    show(beany);
+    show(beany, 2);
+    testing[0] = 'D';
+    testing[1] = 'u';
+    show(testing);
+    show(testing, 2);
+    show("Done!");
+
+    delete[] beany.str;
     return 0;
 }
 
-string &upper_str(string &src) {
+void show(char *src, int times) {
+    for (int i = 0; i < times; ++i) {
+        cout << src << endl;
+    }
+}
 
-    unsigned long size = src.size();
-    char temp[size + 1];
-    for (unsigned int i = 0; i < size; ++i) {
-        temp[i] = src.at(i);
+void show(stringy &src, int times) {
+    for (unsigned int i = 0; i < times; ++i) {
+        cout << src.str << endl;
     }
-    temp[size] = '\0';
-    for (int j = 0; j < size; ++j) {
-        temp[j] = (char) toupper(temp[j]);
-    }
-    src = temp;
-//    cout << "upper --> " << src << endl;
-    return src;
+}
+
+void set(stringy &sg, const char *target) {
+    size_t len = strlen(target);
+    sg.str = new char[len];  // must new one !
+    sg.str[len] = '\0'; // must has this !
+    strncpy(sg.str, target, len);
+    sg.ct = (int) len;
+
 }
