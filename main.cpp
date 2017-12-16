@@ -1,27 +1,35 @@
-#include <iostream>
-#include <fstream>
+#include<iostream>
 
 using namespace std;
 
-template<typename T>
-void swap2(T &a, T &b);
+struct CandyBar {
+    string brandName;
+    double weight;
+    int hot;
+};
+
+CandyBar &fill(CandyBar &cb, char *name = (char *) "Millennium Munch",
+               double w = 2.85, int h = 350);
+
+void show(const CandyBar &cb);
+
 
 int main() {
-
-
-    int a = 12;
-    int b = 9;
-
-    cout << "before: a=" << a << " , b=" << b << endl;
-    swap2(a, b);
-    cout << "after : a=" << a << " , b=" << b << endl;
+    CandyBar bar{};
+//    fill(bar);
+    show(fill(bar));
     return 0;
 }
 
-template<typename T>
-void swap2(T &a, T &b) {
-    T temp = a;
-    a = b;
-    b = temp;
+void show(const CandyBar &cb) {
+    cout << "{" << cb.brandName << " , "
+         << cb.weight << " , "
+         << cb.hot << "}" << endl;
 }
 
+CandyBar &fill(CandyBar &cb, char *name, double w, int h) {
+    cb.brandName = name;
+    cb.weight = w;
+    cb.hot = h;
+    return cb;
+}
