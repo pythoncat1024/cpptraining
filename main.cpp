@@ -4,50 +4,28 @@
 
 using namespace std;
 
-struct stringy {
-    char *str;
-    int ct;
-};
-
-void set(stringy &str, const char *target);
-
-void show(stringy &src, int times = 0);
-
-void show(char *src, int times = 0);
+template<typename T>
+T max5(T arr[]);
 
 int main() {
-    stringy beany;
-    char testing[] = "Reality isn't what it used to be.";
-    set(beany, testing);
-    show(beany);
-    show(beany, 2);
-    testing[0] = 'D';
-    testing[1] = 'u';
-    show(testing);
-    show(testing, 2);
-    show("Done!");
 
-    delete[] beany.str;
+    int arr1[5] = {1, 3, 5, 2, 4};
+
+    double arr2[5] = {1.3, 3, 5.4, 2, 4};
+
+    cout << "max5 in arr1 ===" << max5(arr1) << endl;
+    cout << "max5 in arr2 ===" << max5(arr2) << endl;
+
     return 0;
 }
 
-void show(char *src, int times) {
-    for (int i = 0; i < times; ++i) {
-        cout << src << endl;
+template<typename T>
+T max5(T arr[]) {
+    T temp = arr[0];
+    for (int i = 1; i < 5; ++i) {
+        if (arr[i] > temp) {
+            temp = arr[i];
+        }
     }
-}
-
-void show(stringy &src, int times) {
-    for (unsigned int i = 0; i < times; ++i) {
-        cout << src.str << endl;
-    }
-}
-
-void set(stringy &sg, const char *target) {
-    size_t len = strlen(target);
-    sg.str = new char[len];  // must new one !
-    sg.str[len] = '\0'; // must has this !
-    strncpy(sg.str, target, len);
-    sg.ct = (int) len;
-
+    return temp;
 }
