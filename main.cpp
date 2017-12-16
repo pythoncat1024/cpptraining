@@ -3,19 +3,37 @@
 
 using namespace std;
 
-void song(const char *name = "比亚迪 唐", int times=1);
+struct box {
+    char marker[40];
+    float height;
+    float width;
+    float length;
+    float volume;
+};
 
+void show(const box &obj);
+
+box &fill(box &obj);
 
 int main() {
 
-    song();
-
+    box b = {"比亚迪 唐", 12.5, 20, 18, 99};
+    show(b);
+    fill(b);
+    show(b);
     return 0;
 }
 
-void song(const char *name, int times) {
-    using namespace std;
-
-    cout << name << endl;
-    cout << times << endl;
+box &fill(box &obj) {
+    obj.volume = obj.width * obj.height * obj.length;
+    return obj;
 }
+
+void show(const box &obj) {
+    cout << "{ " << obj.marker << " , "
+         << obj.height << " , "
+         << obj.width << " , "
+         << obj.length << " , "
+         << obj.volume << " }" << endl;
+}
+
