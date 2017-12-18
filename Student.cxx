@@ -36,7 +36,7 @@ double Student::getScore() {
 }
 
 
-void Student::show() {
+void Student::show()const {
     using std::cout;
     using std::endl;
 
@@ -71,7 +71,22 @@ std::string *Student::getNameP() {
 }
 
 Student::Student(const std::string &name,
-                 int age, int grade) : name(name), age(age), grade(grade) {
+                 int age, int grade)
+/*: name(name), age(age), grade(grade)*/ {
+    this->name = name;
+    this->age = age;
+    this->grade = grade;
     std::cout << "............Student class Constructor called" << std::endl;
+
+}
+
+Student::Student() {
+    std::cout << "##############............Student class Constructor " << std::endl;
+
+}
+
+Student::~Student() {
+    std::cout << "Death --< name==" << name << " | " << grade << std::endl; // 此时成员变量已经不可用了
+    std::cout << "Death#Death#Death#Death# Destructor...called.." << std::endl;
 }
 

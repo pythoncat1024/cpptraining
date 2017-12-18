@@ -11,7 +11,6 @@
 class Student {
 
 public:
-    Student(const std::string &name, int age = 18, int grade = 1);
 
 private:
     std::string name;
@@ -22,6 +21,10 @@ private:
     void play();
 
 public:
+    Student(const std::string &name, int age = 18, int grade = 1);
+    Student();
+    virtual ~Student();
+
     void registerIn(std::string name, int age, int grade);
 
     const std::string &getName();
@@ -31,11 +34,12 @@ public:
 
     double getScore();
 
-    void show();
+    void show()const;
 
     double testing(double score);
 
     void resetInfo();
+
 };
 
 
