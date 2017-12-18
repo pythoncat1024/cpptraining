@@ -10,6 +10,9 @@
 
 class Student {
 
+public:
+    Student(const std::string &name, int age = 18, int grade = 1);
+
 private:
     std::string name;
     int age;
@@ -23,6 +26,7 @@ public:
 
     const std::string &getName();
 
+    std::string *getNameP(); // 看一下默认的参数是不是空指针：并不是空指针
     int getAge();
 
     double getScore();

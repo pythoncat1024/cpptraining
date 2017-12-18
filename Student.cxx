@@ -65,3 +65,13 @@ void Student::resetInfo() {
     play();
 }
 
+std::string *Student::getNameP() {
+//    name = NULL;
+    return &this->name; // 默认就不是空指针
+}
+
+Student::Student(const std::string &name,
+                 int age, int grade) : name(name), age(age), grade(grade) {
+    std::cout << "............Student class Constructor called" << std::endl;
+}
+
