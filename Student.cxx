@@ -14,9 +14,6 @@ void Student::registerIn(std::string str, int ages, int grades) {
     if (ages < 18) {
         ages = 18;
     }
-    if (&name == NULL) {
-        name = "";
-    }
     if (grades < 1) {
         grades = 1;
     }
