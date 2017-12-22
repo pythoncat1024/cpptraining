@@ -6,10 +6,15 @@
 #define CPP02_BANKACCOUNT_H
 
 
-class BankAccount {
+#include <string>
 
+class BankAccount {
+private:
+    double account;
+    std::string name;
 public:
-    BankAccount();
+
+    BankAccount(double account = 0, const std::string &name = "");
 
     void showAccountInfo();
 
