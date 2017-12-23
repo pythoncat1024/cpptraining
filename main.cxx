@@ -1,23 +1,20 @@
 #include <iostream>
-#include "stack.h"
+#include "move.h"
 
 int main() {
     using namespace std;
-    using catStack::Stack;
-    using catStack::customer;
-    Stack s;
-//    s.remove();
-    customer c = {"张三", 29};
-    customer c1 = {"李四", 30};
 
-    s.add(c);
-    s.add(c1);
-    s.remove();
+    Move m = Move(0, 0);
+    m.showMove();
+    Move val = Move(12, 15);
+    m = m.add(val);
+    m.showMove();
 
-    s.add(c1);
-    s.add(c);
+    m.reset();
+    m.showMove();
 
-
-    std::cout << "xxxxxxxxx\n";
+    m.add2(val);
+    m.add2(m.add2(val));
+    m.showMove();
     return 0;
 }
