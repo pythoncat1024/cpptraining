@@ -1,23 +1,33 @@
+
 #include <iostream>
-#include "Person.h"
+#include "golf.h"
 
 int main() {
 
-    using std::cout;
-    using std::endl;
-    Person one;
-    Person two("Smythecraft");
-    Person three("Dimwiddy", "Sam");
-    one.show();
-    cout << endl;
-    one.FormalShow();
+    const int ArrSize = 5;
+    golf arrG[ArrSize]{};
 
-    Person arr[3] = {one, two, three};
+    // set data
+    for (int i = 0; i < ArrSize; ++i) {
+        int set = setgolf(arrG[i]);
 
-    for (int i = 0; i < 3; ++i) {
-        arr[i].show();
-        cout << endl;
-        arr[i].FormalShow();
+        std::cout << "set= " << set << std::endl;
+        if (!set)break;
+    }
+
+    std::cout<< "show data:\n";
+// show data
+    for (int k = 0; k < ArrSize; ++k) {
+        showgolf(arrG[k]);
+    }
+    // reset data
+    for (int j = 0; j < ArrSize; ++j) {
+        handicap(arrG[j], j + 1);
+    }
+    // reshow data
+    std::cout<< "reshow data:\n";
+    for (int k = 0; k < ArrSize; ++k) {
+        showgolf(arrG[k]);
     }
     return 0;
 }
