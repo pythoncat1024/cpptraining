@@ -1,23 +1,23 @@
 #include <iostream>
-#include "sales.h"
+#include "stack.h"
 
 int main() {
     using namespace std;
-    using SALES::Sales;
-    Sales s1, s2;
-    s1.setSales();
+    using catStack::Stack;
+    using catStack::customer;
+    Stack s;
+//    s.remove();
+    customer c = {"张三", 29};
+    customer c1 = {"李四", 30};
 
-    cout << " show sales #1:\n";
-    s1.showSales();
+    s.add(c);
+    s.add(c1);
+    s.remove();
 
-    double arr[4] = {1.23, 3.32, 4.31, 7.6};
-    s2.setSales( arr, 3);
-    cout << " show sales #2:\n";
-    s2.showSales();
+    s.add(c1);
+    s.add(c);
 
-//    int num;
-//    cin >> num;
-//
-//    cout << " num=" << num << " done \n";
+
+    std::cout << "xxxxxxxxx\n";
     return 0;
 }

@@ -3,5 +3,5 @@ project(cpp02)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cxx sales.h sales.cxx)
+set(SOURCE_FILES main.cxx stack.h stack.cxx)
 add_executable(cpp02 ${SOURCE_FILES})
