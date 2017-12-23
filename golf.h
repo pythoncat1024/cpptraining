@@ -5,27 +5,31 @@
 #ifndef CPP02_GOLF_H
 #define CPP02_GOLF_H
 
-const int Len = 40;
-struct golf {
-    char fullname[Len];
-    int handicap;
-};
 
-// non-interactive version:
+class golf {
+private:
+    static const unsigned int Len = 40;
+    char fullname[Len];
+    int hand;
+public:
+    golf(const char *fullname="", int handicap=0);
+    // non-interactive version:
 // function sets golf structure to provided name, handicap
 // using values passed as arguments to the function
-void setgolf(golf &g, const char *name, int hc);
+//void setgolf(golf &g, const char *name, int hc);
 
 // interactive version:
 // function solicits name and handicap from user
 // and sets the members of g to the values entered
 // return 1 if name is entered, 0 if name is empty string
-int setgolf(golf &g);
+    golf &setgolf();
 
 // function resets handicap to new values
-void handicap(golf &g, int hc);
+    void handicap( int hc);
 
 // function displays contents of golf structure
-void showgolf(golf &g);
+    void showgolf() const;
+};
+
 
 #endif //CPP02_GOLF_H

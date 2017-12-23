@@ -6,12 +6,8 @@
 #include <iostream>
 #include <cstring>
 
-void setgolf(golf &g, const char *name, int hc) {
-    strncpy(g.fullname, name, Len);
-    g.handicap = hc;
-}
 
-int setgolf(golf &g) {
+golf &golf::setgolf() {
     using namespace std;
 
     static int pos = 0;
@@ -27,29 +23,38 @@ int setgolf(golf &g) {
     cout << msg1;
     cin.get(temp, Len);
     pos += 1;
-    if (temp == NULL || temp[0] == '\0' || !cin) {
-        cout << "pos=" << pos << "temp=" << temp << endl;
+    if ( temp[0] == '\0' || !cin) {
+        cout << "ERROR:pos=" << pos << "temp=" << temp << endl;
         goto stop;
     }
     cout << msg2;
     cin >> hc;
-    setgolf(g, temp, hc);
-    ret = 1;
+//    setgolf(g, temp, hc);
+    *this = golf(temp, hc);
     stop:;
     // reset cin start {
     cin.clear();
     while (cin.get() != '\n')continue;
     // reset cin  end  }
-
     cout << "finish pos " << pos << endl;
-    return ret;
+    return *this;
 }
 
-void handicap(golf &g, int hc) {
-    g.handicap = hc;
+void golf::handicap(int hc) {
+    this->hand = hc;
 }
 
-void showgolf(golf &g) {
-    std::cout << "{" << g.fullname << " , "
-              << g.handicap << "}" << std::endl;
+void golf::showgolf() const {
+    std::cout << "{" << this->fullname << " , "
+              << this->hand << "}" << std::endl;
 }
+
+golf::golf(const char *fullname, int handicap) {
+
+    strncpy(this->fullname, fullname, Len);
+    this->hand = handicap;
+}
+
+
+
+

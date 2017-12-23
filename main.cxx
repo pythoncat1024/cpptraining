@@ -9,25 +9,25 @@ int main() {
 
     // set data
     for (int i = 0; i < ArrSize; ++i) {
-        int set = setgolf(arrG[i]);
+        golf &set = arrG[i].setgolf();
 
-        std::cout << "set= " << set << std::endl;
-        if (!set)break;
+//        std::cout << "set= " << set << std::endl;
+        if (&set == NULL)break;
     }
 
-    std::cout<< "show data:\n";
+    std::cout << "show data:\n";
 // show data
     for (int k = 0; k < ArrSize; ++k) {
-        showgolf(arrG[k]);
+        arrG[k].showgolf();
     }
     // reset data
     for (int j = 0; j < ArrSize; ++j) {
-        handicap(arrG[j], j + 1);
+        arrG[j].handicap( j + 1);
     }
     // reshow data
-    std::cout<< "reshow data:\n";
+    std::cout << "reshow data:\n";
     for (int k = 0; k < ArrSize; ++k) {
-        showgolf(arrG[k]);
+        arrG[k].showgolf();
     }
     return 0;
 }
