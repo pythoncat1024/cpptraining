@@ -34,5 +34,9 @@ int main() {
 
     total.show();
 
+    cout << "#########################\n";
+    const Time t = Time(3, 45);
+    Time temp = 3 * t;
+    temp.show();
     return 0;
 }

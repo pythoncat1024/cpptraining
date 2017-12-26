@@ -75,10 +75,16 @@ Time Time::operator-(const Time &another) const {
 
 Time Time::operator*(double factor) const {
     Time multi;
-
     int total = (int) (this->hours * MINUTE_UNIT * factor
                        + this->minutes * factor);
     multi.minutes = total % MINUTE_UNIT;
     multi.hours += total / MINUTE_UNIT;
     return multi;
+}
+
+Time operator*(double factor, const Time &t) {
+    // 这里的参数为何定义为 const Time &t ?
+    // 因为按照c++的规则，const 形参可以接受，const和非const的实参，而非const形参，不能接受const实参！
+    // （因为此时可能会改变这个参数，特别是对于引用参数）
+    return t * factor; // 调用 [Time Time::operator*(double factor) const]
 }
