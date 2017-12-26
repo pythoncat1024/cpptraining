@@ -30,8 +30,26 @@ void Time::reset(int h, int m) {
     this->hours = h;
     this->minutes = m;
 }
+//
+//Time Time::sum(const Time &another) const {
+//    Time total;
+//    total.minutes += this->minutes;
+//    total.hours += this->hours;
+//
+//    total.hours += another.hours;
+//    total.minutes += another.minutes;
+//    total.hours += total.minutes / MINUTE_UNIT; // format start {@
+//    total.minutes %= MINUTE_UNIT; // format end @}
+//    return total;
+//}
 
-Time Time::sum(const Time &another) const {
+void Time::show() const {
+
+    using std::cout;
+    cout << "Time{ " << this->hours << "h " << this->minutes << "m }\n";
+}
+
+Time Time::operator+(const Time &another) const {
     Time total;
     total.minutes += this->minutes;
     total.hours += this->hours;
@@ -41,10 +59,4 @@ Time Time::sum(const Time &another) const {
     total.hours += total.minutes / MINUTE_UNIT; // format start {@
     total.minutes %= MINUTE_UNIT; // format end @}
     return total;
-}
-
-void Time::show() const {
-
-    using std::cout;
-    cout << "Time{ " << this->hours << "h " << this->minutes << "m }\n";
 }

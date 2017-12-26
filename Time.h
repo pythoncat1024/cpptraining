@@ -23,7 +23,9 @@ public:
 
     void reset(int h = 0, int m = 0);
 
-    Time sum(const Time &another) const; // 末尾的const表示不修改 *this
+//    Time sum(const Time &another) const; // 末尾的const表示不修改 *this
+
+    Time operator+(const Time &another) const;
 
     void show() const;
 

@@ -15,8 +15,9 @@ int main() {
     working.addMin(35);
     working.show();
 
-    total = working.sum(play);
+//    total = working.sum(play);
 
+    total = play + working;
     total.show();
 
     working.reset();
