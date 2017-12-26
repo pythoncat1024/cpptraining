@@ -60,3 +60,25 @@ Time Time::operator+(const Time &another) const {
     total.minutes %= MINUTE_UNIT; // format end @}
     return total;
 }
+
+Time Time::operator-(const Time &another) const {
+    Time cmp;
+    int totSelf = this->minutes + this->hours * MINUTE_UNIT;
+    int totOther = another.minutes + another.hours * MINUTE_UNIT;
+    int diff = totSelf - totOther;
+
+    cmp.minutes = diff % MINUTE_UNIT;
+    cmp.hours = diff / MINUTE_UNIT;
+
+    return cmp;
+}
+
+Time Time::operator*(double factor) const {
+    Time multi;
+
+    int total = (int) (this->hours * MINUTE_UNIT * factor
+                       + this->minutes * factor);
+    multi.minutes = total % MINUTE_UNIT;
+    multi.hours += total / MINUTE_UNIT;
+    return multi;
+}

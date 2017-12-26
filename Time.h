@@ -27,6 +27,9 @@ public:
 
     Time operator+(const Time &another) const;
 
+    Time operator-(const Time &another) const;
+    Time operator*(double factor) const;
+
     void show() const;
 
 };
