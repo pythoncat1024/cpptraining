@@ -5,6 +5,7 @@
 #ifndef CPP02_TIME_H
 #define CPP02_TIME_H
 
+#include <iostream>
 
 class Time {
 
@@ -37,6 +38,8 @@ public:
 
     void show() const;
 
+
+    friend std::ostream &operator<<(std::ostream &os, const Time &t);
 };
 
 

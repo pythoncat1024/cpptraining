@@ -88,3 +88,8 @@ Time operator*(double factor, const Time &t) {
     // （因为此时可能会改变这个参数，特别是对于引用参数）
     return t * factor; // 调用 [Time Time::operator*(double factor) const]
 }
+
+std::ostream &operator<<(std::ostream &os, const Time &t) {
+
+    return os << t.hours << " hours , " << t.minutes << " minutes\n";
+}

@@ -38,5 +38,7 @@ int main() {
     const Time t = Time(3, 45);
     Time temp = 3 * t;
     temp.show();
+
+    cout << "temp.toString():" << temp << endl << temp;
     return 0;
 }
