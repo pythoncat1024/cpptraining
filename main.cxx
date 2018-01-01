@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <random>
-#include <stdlib.h>
+#include <fstream>
 #include "Vector.h"
 
 void end();
@@ -10,7 +10,7 @@ void resetCin();
 
 void executeFromUser();
 
-void execute(double length, double step);
+void execute(std::ostream &os, double length, double step);
 
 void executeTimes(unsigned int times);
 
@@ -33,6 +33,10 @@ int main() {
 
 //    executeFromUser();
     executeTimes(100);
+
+    std::ofstream out;
+    out.open("abc.txt");
+    out.close();
     return 0;
 }
 
@@ -42,6 +46,8 @@ void executeTimes(unsigned int times) {
 
     cout << "随机漫步模拟.\n";
 
+    ofstream out;
+    out.open("output.txt");
     double avg = 0;
     double length; // 总位移
     double eachLen;// 单步长度
@@ -61,7 +67,7 @@ void executeTimes(unsigned int times) {
             if (ostr >> eachLen) {
                 cout << "todo: SUCCESS\n";
                 for (int pos = 0; pos < times; ++pos) {
-                    execute(length, eachLen);
+                    execute(out, length, eachLen);
                     avg += currentSteps;
                 }
                 goto fuck;
@@ -76,12 +82,16 @@ void executeTimes(unsigned int times) {
 
     avg = avg / times;
     streamsize precision = cout.precision(2);
+    streamsize precision1 = out.precision(2);
     cout << "随机漫步目标位移为" << length << "时的平均步数为：" << avg << "\n";
+    out << "随机漫步目标位移为" << length << "时的平均步数为：" << avg << "\n";
     cout.precision(precision);
+    out.precision(precision1);
+    out.close();
 }
 
-void execute(double length, double step) {
-    using namespace std;
+void execute(std::ostream &os, double length, double step) {
+//    using namespace std;
     using VECTOR::Vector;
     Vector init{};
 //    cout << "init.Length=" << init.getLength() << " , length=" << length << endl;
@@ -93,13 +103,13 @@ void execute(double length, double step) {
 //                    cout << "........each:" << each;
         init += each;
     }
-    streamsize precision = cout.precision(2);
-    cout << "RESULT:" << init;
-    cout << "这一次走完目标距离(" << length << ")一共用了[" << currentSteps << "]步，";
-    cout << "目前距离长度为：" << init.getLength() << " > 目标长度：" << length << endl;
+    std::streamsize precision = os.precision(2);
+    os << "RESULT:" << init;
+    os << "这一次走完目标距离(" << length << ")一共用了[" << currentSteps << "]步，";
+    os << "目前距离长度为：" << init.getLength() << " > 目标长度：" << length << std::endl;
     usedTimes++;
-    cout << "还有(" << (MAX_FREE - usedTimes) << ")次机会\n";
-    cout.precision(precision);
+//    os << "还有(" << (MAX_FREE - usedTimes) << ")次机会\n";
+    os.precision(precision);
 }
 
 void executeFromUser() {
@@ -123,7 +133,7 @@ void executeFromUser() {
             ostr << input;
             if (ostr >> eachLen) {
                 cout << "todo: SUCCESS\n";
-                execute(length, eachLen);
+                execute(cout, length, eachLen);
                 if (!USER_INPUT) {
                     goto fuck;
                 }
