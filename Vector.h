@@ -11,7 +11,7 @@
 /**
  * 矢量类
  */
-namespace VECTOR{
+namespace VECTOR {
     class Vector {
 
     public:
@@ -43,6 +43,9 @@ namespace VECTOR{
 
         Vector(const Vector &data);
 
+        double getLength() {
+            return this->length;
+        };
 
         virtual ~Vector();
 
@@ -50,6 +53,7 @@ namespace VECTOR{
 
 // operator
         Vector operator*(double factor);
+        Vector operator*=(double factor);
 
         Vector operator-();
 
@@ -57,10 +61,11 @@ namespace VECTOR{
         friend std::ostream &operator<<(std::ostream &os, Vector &obj); // toString
 
         friend Vector operator+(Vector one, Vector another);
-
+        friend Vector operator+=(Vector one, Vector another);
         friend Vector operator-(Vector one, Vector another);
-
+        friend Vector operator-=(Vector one, Vector another);
         friend Vector operator*(double factor, Vector obj);
+        friend Vector operator*=(double factor, Vector obj);
     };
 
 

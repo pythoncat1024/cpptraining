@@ -20,7 +20,6 @@ namespace VECTOR {
     Vector::Vector(double num1,
                    double num2,
                    Vector::Mode currentMode) {
-
         reset(num1, num2, currentMode);
     }
 
@@ -66,6 +65,10 @@ namespace VECTOR {
         return obj;
     }
 
+    Vector VECTOR::operator+=(Vector one, Vector another) {
+        return operator+(one, another);
+    }
+
     Vector &Vector::set2RECT() {
         if (this->currentMode == Vector::RECT) {
             return *this;
@@ -99,8 +102,8 @@ namespace VECTOR {
         return v;
     }
 
-    Vector operator*(double factor, Vector obj) {
-        return obj * factor;
+    Vector operator-=(Vector one, Vector another) {
+        return operator-(one, another);
     }
 
     Vector Vector::operator*(double factor) {
@@ -112,10 +115,23 @@ namespace VECTOR {
         return obj;
     }
 
+    Vector Vector::operator*=(double factor) {
+        return operator*(factor);
+    }
+
+    Vector operator*(double factor, Vector obj) {
+        return obj * factor;
+    }
+
+    Vector operator*=(double factor, Vector obj) {
+        return operator*(factor, obj);
+    }
+
+
     Vector Vector::operator-() {
         Mode mode = this->currentMode;
         this->set2RECT();
-        Vector v = Vector(-this->xLen, -this->yLen,Vector::RECT);
+        Vector v = Vector(-this->xLen, -this->yLen, Vector::RECT);
         v.currentMode = mode;
         return v;
     }
