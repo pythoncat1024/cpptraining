@@ -6,8 +6,10 @@
 #define CPP02_STEP_H
 
 #include <iostream>
+#include <cmath>
 #include <math.h>
 
+#define Math_PI 3.1415927
 /**
  * 矢量类
  */
@@ -25,17 +27,17 @@ namespace VECTOR {
         double xLen; // x 方向的位移
         double yLen; // y 方向的位移
 
-        Vector &set2RECT(); // 转成正坐标
-        Vector &set2POL(); // 转成正坐标
+        Vector set2RECT() const; // 转成正坐标
+        Vector set2POL() const; // 转成正坐标
 
-        double radian2Angle(double radian) // 弧度转角度
+        double radian2Angle(double radian) const // 弧度转角度
         {
-            return 1.0 * radian / M_PI * 180;
+            return 1.0 * radian / Math_PI * 180;
         }
 
-        double angle2Radian(double angle)// 角度转弧度
+        double angle2Radian(double angle) const // 角度转弧度
         {
-            return 1.0 * angle * M_PI / 180;
+            return 1.0 * angle * Math_PI / 180;
         }
 
     public:
@@ -53,6 +55,7 @@ namespace VECTOR {
 
 // operator
         Vector operator*(double factor);
+
         Vector operator*=(double factor);
 
         Vector operator-();
@@ -60,12 +63,17 @@ namespace VECTOR {
         // friend operator
         friend std::ostream &operator<<(std::ostream &os, Vector &obj); // toString
 
-        friend Vector operator+(Vector one, Vector another);
-        friend Vector operator+=(Vector one, Vector another);
-        friend Vector operator-(Vector one, Vector another);
-        friend Vector operator-=(Vector one, Vector another);
-        friend Vector operator*(double factor, Vector obj);
-        friend Vector operator*=(double factor, Vector obj);
+        friend Vector operator+(const Vector &one, const Vector &another);
+
+        friend Vector operator+=(Vector &one, const Vector &another);
+
+        friend Vector operator-(const Vector &one, const Vector &another);
+
+        friend Vector operator-=(Vector &one, const Vector &another);
+
+        friend Vector operator*(double factor,  Vector &obj);
+
+        friend Vector operator*=(double factor, Vector &obj);
     };
 
 

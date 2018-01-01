@@ -3,6 +3,7 @@
 //
 
 #include "Vector.h"
+#include <cmath>
 
 namespace VECTOR {
 
@@ -54,56 +55,61 @@ namespace VECTOR {
 
     }
 
+    Vector Vector::set2RECT() const {
+        Vector v = Vector(*this);
+        if (this->currentMode == Vector::RECT) {
+            return v;
+        } else if (this->currentMode == Vector::POL) {
+            v.currentMode = Vector::RECT;
+            v.xLen = this->length * cos(this->angle2Radian(this->angle));
+            v.yLen = this->length * sin(this->angle2Radian(this->angle));
+        }
+        return v;
 
-    Vector operator+(Vector one, Vector another) {
+    }
+
+    Vector Vector::set2POL() const {
+        Vector v = Vector(*this);
+        if (this->currentMode == Vector::POL) {
+            return v;
+        } else {
+            v.currentMode = Vector::POL;
+            v.angle = radian2Angle(atan2(this->yLen, this->xLen));
+            double len2 = pow(this->xLen, 2) + pow(this->yLen, 2);
+            v.length = pow(len2, 0.5);
+        }
+        return v;
+    }
+
+    Vector operator+(const Vector &a, const Vector &b) {
         Vector obj;
-
-        one = one.set2RECT();
-        another = another.set2RECT();
+        Vector one, another;
+        one = a.set2RECT();
+        another = b.set2RECT();
 
         obj = Vector(one.xLen + another.xLen, one.yLen + another.yLen, Vector::RECT);
         return obj;
     }
 
-    Vector VECTOR::operator+=(Vector one, Vector another) {
-        return operator+(one, another);
+    Vector VECTOR::operator+=(Vector &one, const Vector &another) {
+        one = operator+(one, another);
+        return one;
     }
 
-    Vector &Vector::set2RECT() {
-        if (this->currentMode == Vector::RECT) {
-            return *this;
-        } else if (this->currentMode == Vector::POL) {
-            this->currentMode = Vector::RECT;
-            this->xLen = this->length * cos(this->angle2Radian(this->angle));
-            this->yLen = this->length * sin(this->angle2Radian(this->angle));
-        }
-        return *this;
 
-    }
-
-    Vector &Vector::set2POL() {
-        if (this->currentMode == Vector::POL) {
-            return *this;
-        } else {
-            this->currentMode = Vector::POL;
-            this->angle = radian2Angle(atan2(this->yLen, this->xLen));
-            double len2 = pow(this->xLen, 2) + pow(this->yLen, 2);
-            this->length = pow(len2, 0.5);
-        }
-        return *this;
-    }
-
-    Vector operator-(Vector one, Vector another) {
+    Vector operator-(const Vector &a, const Vector &b) {
+        Vector one, another;
         Vector::Mode mode = one.currentMode;
-        one = one.set2RECT();
-        another = another.set2RECT();
+        one = a.set2RECT();
+        another = b.set2RECT();
         Vector v = Vector(one.xLen - another.xLen, one.yLen - another.yLen, Vector::RECT);
         v.currentMode = mode;
         return v;
     }
 
-    Vector operator-=(Vector one, Vector another) {
-        return operator-(one, another);
+    Vector operator-=(Vector &one, const Vector &another) {
+        one = operator-(one, another);
+        return one;
     }
 
     Vector Vector::operator*(double factor) {
@@ -119,11 +125,11 @@ namespace VECTOR {
         return operator*(factor);
     }
 
-    Vector operator*(double factor, Vector obj) {
+    Vector operator*(double factor, Vector &obj) {
         return obj * factor;
     }
 
-    Vector operator*=(double factor, Vector obj) {
+    Vector operator*=(double factor, Vector &obj) {
         return operator*(factor, obj);
     }
 
@@ -154,7 +160,6 @@ namespace VECTOR {
         }
         os.setf(pref);  // reset
         os.precision(preC); // reset
-
         return os;
     }
 
