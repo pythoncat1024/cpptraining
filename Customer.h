@@ -6,9 +6,30 @@
 #define CPP02_CUSTOMER_H
 
 
+#include <ostream>
 
 class Customer {
 
+private:
+    long arriveTime;
+    int processTime;
+
+public:
+    Customer();
+
+    Customer(const Customer &co);
+
+    virtual ~Customer();
+
+    Customer &operator=(const Customer &co);
+
+    void set(long when);
+
+    long when() const { return arriveTime; }
+
+    int pTime() const { return processTime; }
+
+    friend std::ostream &operator<<(std::ostream &os, const Customer &co);
 };
 
 
