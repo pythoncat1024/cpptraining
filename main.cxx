@@ -1,12 +1,12 @@
 #include <iostream>
 #include "Queue.h"
 #include "Stack.h"
-
-void foo(que::Queue queue);
+#include "LinkedList.h"
 
 using namespace que;
 using namespace std;
 using namespace stacks;
+using namespace lists;
 
 int main() {
 
@@ -48,33 +48,64 @@ int main() {
         Customer co3 = Customer(789);
         Stack *stackStack = new Stack(15);
 //        Stack ss = *stackStack;
-        cout << "stacks=" << *stackStack<<endl;
+        cout << "stacks=" << *stackStack << endl;
 
         stackStack->push(co1);
         stackStack->push(co3);
-        cout << "stacks=" << *stackStack<<endl;
+        cout << "stacks=" << *stackStack << endl;
         stackStack->pop();
-        cout << "stacks=" << *stackStack<<endl;
+        cout << "stacks=" << *stackStack << endl;
         stackStack->push(co1);
         stackStack->push(co2);
         stackStack->push(co3);
-        cout << "stacks=" << *stackStack<<endl;
+        cout << "stacks=" << *stackStack << endl;
         stackStack->pop();
         stackStack->pop();
         stackStack->pop();
         stackStack->pop();
 
-        cout << "stacks=" << *stackStack;
+        cout << "stacks=" << *stackStack << endl;
 
         stackStack->pop();
         stackStack->pop();
         stackStack->pop();
+
+        delete stackStack;
     }
+    cout << "----------up is stack-----down is linkedList------\n";
+    {
+        Customer co1 = Customer(123);
+        Customer co2 = Customer(456);
+        Customer co3 = Customer(789);
+        LinkedList *list = new LinkedList(12);
+        cout << "list=" << *list << endl;
+
+        list->add(co1);
+        list->add(co2);
+        list->add(co3);
+        list->add(co1, 1);
+        list->add(Customer(255), 2);
+        cout << "list=" << *list << endl;
+        list->remove(2);
+        list->remove();
+        cout << "list=" << *list << endl;
+        list->remove(0);
+        cout << "list=" << *list << endl;
+        list->add(co1);
+        list->add(co2);
+        list->add(co3);
+        cout << "list=" << *list << endl;
+        list->remove();
+        cout << "list=" << *list << endl;
+
+        list->remove(2);
+        cout << "list=" << *list << endl;
+//        list->release();
+        cout << "list=" << *list << endl;
+
+        delete list;
+    }
+
+    cout << "done\n";
     return 0;
 }
-
-//void foo(que::Queue queue) {
-//
-//    int size = queue.size();
-//    cout << "size==" << size<<endl;
-//}

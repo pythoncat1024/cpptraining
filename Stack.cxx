@@ -45,7 +45,7 @@ namespace stacks {
 
         }
         this->items--;
-        return false;
+        return true;
     }
 
     bool stacks::Stack::push(const stacks::Item &obj) {
