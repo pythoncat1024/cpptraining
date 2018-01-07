@@ -9,6 +9,10 @@ Customer::Customer() {
     arriveTime = processTime = 0;
 }
 
+Customer::Customer(long when) {
+    set(when);
+}
+
 Customer::Customer(const Customer &co) {
     arriveTime = co.arriveTime;
     processTime = co.processTime;

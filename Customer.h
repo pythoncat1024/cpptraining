@@ -17,6 +17,8 @@ private:
 public:
     Customer();
 
+    Customer(long when);
+
     Customer(const Customer &co);
 
     virtual ~Customer();
@@ -31,7 +33,6 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Customer &co);
 };
-
 
 
 #endif //CPP02_CUSTOMER_H

@@ -27,23 +27,20 @@ namespace que {
     }
 
     bool Queue::enqueue(const Item &obj) {
+        // add 2 the end
         if (isFull()) {
             return false;
         }
-        Node *no = new Node;
-        no->item = obj;
-        no->next = nullptr;
-        if (this->front == nullptr || this->items == 0) {
-            // add 2 the first
-            this->front = no;
-            this->rear = no;
-//            items++;
+        Node *add = new Node; // maybe throw exception
+        add->item = obj;
+        add->next = nullptr;
+
+        if (this->front == nullptr) {
+            this->front = add;
+            this->rear = add;
         } else {
-            // add after current rear
-            Node *temp = this->rear;
-            temp->next = no;
-            this->rear = no;
-//            items++;
+            this->rear->next = add;
+            this->rear = add; // 指针重定向
         }
         items++;
         return true;
@@ -53,14 +50,11 @@ namespace que {
         if (this->isEmpty()) {
             return false;
         }
-        if (size() == 1) {
+        Node *rm = this->front;
+        this->front = this->front->next;
+        delete rm;
+        if (!this->front) {
             this->rear = nullptr;
-            delete this->front;
-            this->front = nullptr;
-        } else {
-            Node *tn = this->front->next;
-            delete this->front;
-            this->front = tn;
         }
         items--;
         return true;

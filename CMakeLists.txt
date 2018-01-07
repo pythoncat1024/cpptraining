@@ -3,7 +3,7 @@ project(cpp02)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cxx Queue.cxx Queue.h Customer.cxx Customer.h Customer.cxx)
+set(SOURCE_FILES main.cxx Queue.cxx Queue.h Customer.cxx Customer.h Customer.cxx Stack.cxx Stack.h)
 add_executable(cpp02 ${SOURCE_FILES})
 
 #
