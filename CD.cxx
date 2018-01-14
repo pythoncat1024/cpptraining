@@ -11,17 +11,15 @@ static bool DEBUG = false;
 CD::CD(char *performers, char *label, int selections, double playtime)
 //        : performers(performers), label(label),
         : selections(selections), playtime(playtime) {
-    const unsigned pMax = 50;
-    const unsigned lMax = 20;
     size_t len1 = std::strlen(performers);
-    size_t n = len1 < pMax - 1 ? len1 : pMax - 1;
-    std::strncpy(this->performers, performers, n);// n=9 --> index[0,8]
-    this->performers[n] = '\0';
+    this->performers = new char[len1 + 1];
+    std::strncpy(this->performers, performers, len1);// n=9 --> index[0,8]
+    this->performers[len1] = '\0';
 
     len1 = strlen(label);
-    n = len1 < lMax - 1 ? len1 : lMax - 1;
-    std::strncpy(this->label, label, n);
-    this->label[n] = '\0';
+    this->label = new char[len1 + 1];
+    std::strncpy(this->label, label, len1);
+    this->label[len1] = '\0';
     if (DEBUG) {
         std::cout << "CD(char *performers, char *label, int selections, double playtime)\n";
     }
@@ -29,8 +27,8 @@ CD::CD(char *performers, char *label, int selections, double playtime)
 
 CD::CD() {
 
-    this->performers[0] = '\0';
-    this->label[0] = '\0';
+    this->performers = nullptr;
+    this->label = nullptr;
     this->selections = 0;
     this->playtime = 0;
     if (DEBUG) {
@@ -39,6 +37,8 @@ CD::CD() {
 }
 
 CD::~CD() {
+    delete[] this->performers;
+    delete[] this->label;
     if (DEBUG) {
         std::cout << "~CD()\n";
     }
@@ -53,9 +53,12 @@ CD::CD(const CD &cd) {
         return;
     }
     size_t n = std::strlen(cd.performers);
+    this->performers = new char[n + 1];
     std::strncpy(this->performers, cd.performers, n);
     this->performers[n] = '\0';
+
     n = std::strlen(cd.label);
+    this->label = new char[n + 1];
     std::strncpy(this->label, cd.label, n);
     this->label[n] = '\0';
     this->selections = cd.selections;
@@ -83,9 +86,14 @@ CD &CD::operator=(const CD &disk) {
         return *this;
     }
     size_t n = std::strlen(disk.performers);
+    delete[]this->performers;
+    this->performers = new char[n + 1];
     std::strncpy(this->performers, disk.performers, n);
     this->performers[n] = '\0';
+
     n = std::strlen(disk.label);
+    delete[] this->label;
+    this->label = new char[n + 1];
     std::strncpy(this->label, disk.label, n);
     this->label[n] = '\0';
     this->selections = disk.selections;
@@ -96,11 +104,10 @@ CD &CD::operator=(const CD &disk) {
 Classic::Classic(char *primary, char *performers, char *label, int selections,
                  double playtime)
         : CD(performers, label, selections, playtime) {
-    const unsigned prMAX = 50;
     size_t len1 = std::strlen(primary);
-    size_t n = len1 < prMAX - 1 ? len1 : prMAX - 1;
-    std::strncpy(this->primary, primary, n);// n=9 --> index[0,8]
-    this->primary[n] = '\0';
+    this->primary = new char[len1 + 1];
+    std::strncpy(this->primary, primary, len1);// n=9 --> index[0,8]
+    this->primary[len1] = '\0';
     if (DEBUG) {
         std::cout << "Classic(char *primary, char *performers, char *label, int selections,double playtime)\n";
     }
@@ -109,6 +116,7 @@ Classic::Classic(char *primary, char *performers, char *label, int selections,
 Classic::Classic(const CD &cd, char *primary) : CD(cd) {
     const unsigned prMAX = 50;
     size_t len1 = std::strlen(primary);
+    this->primary = new char[len1 + 1];
     size_t n = len1 < prMAX - 1 ? len1 : prMAX - 1;
     std::strncpy(this->primary, primary, n);// n=9 --> index[0,8]
     this->primary[n] = '\0';
@@ -119,7 +127,7 @@ Classic::Classic(const CD &cd, char *primary) : CD(cd) {
 
 Classic::Classic() {
     CD::CD();
-    this->primary[0] = '\0';
+    this->primary = nullptr;
 }
 
 void Classic::Report() const {
@@ -137,6 +145,8 @@ Classic &Classic::operator=(const Classic &disk) {
     CD::operator=(disk);
 //    ((CD) *this).operator=(disk);
     size_t n = std::strlen(disk.primary);
+    delete[]this->primary;
+    this->primary = new char[n + 1];
     std::strncpy(this->primary, disk.primary, n);
     this->primary[n] = '\0';
 
@@ -144,4 +154,12 @@ Classic &Classic::operator=(const Classic &disk) {
         std::cout << "&Classic::operator=(const Classic &disk)\n";
     }
     return *this;
+}
+
+Classic::~Classic() {
+//    CD::~CD();
+    delete[]this->primary;
+    if (DEBUG) {
+        std::cout << "::~Classic()\n";
+    }
 }

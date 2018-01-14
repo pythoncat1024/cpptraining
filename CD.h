@@ -9,8 +9,8 @@
 class CD { // represents a CD disk
 
 private:
-    char performers[50];
-    char label[20];
+    char *performers;
+    char *label;
     int selections; // number of selections
     double playtime; // playing time in minutes
 public:
@@ -30,13 +30,15 @@ public:
 
 class Classic : public CD {
 private:
-    char primary[50];
+    char *primary;
 public:
     Classic(char *primary, char *performers, char *label, int selections, double playtime);
 
     Classic(const CD &cd, char *primary);
 
     Classic();
+
+    virtual ~Classic();
 
     virtual void Report() const override; // 这里的virtual 加不加都一样的
 
