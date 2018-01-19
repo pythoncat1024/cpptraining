@@ -13,5 +13,8 @@ int main() {
     list.push("you");
 
     cout << "list.size()==" << list.size() << endl;
+
+    list.pop();
+    cout << "list.size()==" << list.size() << endl;
     return 0;
 }
