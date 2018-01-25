@@ -36,7 +36,7 @@ public:
         }
     }
 
-    unsigned long size() const { return isEmpty() ? 0 : 1 + this->rear - this->front; }
+    unsigned long size() const { return this->length; }
 
     bool isFull() const;
 
